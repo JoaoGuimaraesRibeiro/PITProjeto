@@ -1,14 +1,13 @@
-
 var { update_data } = require('../model/update-data.js')
 
 module.exports = { add_usuario }
-function add_usuario() {
+function add_usuario(body) {
     try {
         var { email_usuario, senha_usuario, confsenha_usuario } = body
 
         const novo_usuario = {
             "email": email_usuario,
-            "name": senha_usuario,
+            "senha": senha_usuario,
             "confsenha": confsenha_usuario
         }
 

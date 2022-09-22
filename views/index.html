@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="/controller/logar.js"></script>
     <title>Caça Talentos Entrada</title>
 </head>
 
@@ -31,16 +32,16 @@
                 <div class="slide-tab"></div>
             </div>
             <div class="form-inner">
-                <form action="/logar" class="login">
+                <form action="/logar" method="post" id="logar" class="login">
                     <div class="field">
-                        <input type="text" placeholder="Insira seu email" required>
+                        <input type="text" name="emails" id="emails" placeholder="Insira seu email" required>
                     </div>
                     <div class="field">
-                        <input type="password" placeholder="Insira sua senha" required>
+                        <input type="password" name="senhas" id="senhas" placeholder="Insira sua senha" required>
                     </div>
                     <div class="pass-link"><a href="#">Esqueceu a senha?</a></div>
                     <div class="field">
-                        <input type="submit" value="Entrar">
+                        <input onclick="logar()" type="submit" value="Entrar">
                     </div>
                     <div class="signup-link">Não é cadastrado? <a href="#">Faça Cadastro agora</a></div>
                 </form>
@@ -49,10 +50,10 @@
                         <input name="email_usuario" id="email_usuario" type="text" placeholder="Insira seu email" required>
                     </div>
                     <div class="field">
-                        <input name="senha_usuario" id="senha_usuario" type="password" placeholder="Insira sua senha" required>
+                        <input name="senha_usuario" id="senha_usuario" type="password" placeholder="Insira sua senha" minlength="3" maxlength="10" required>
                     </div>
                     <div class="field">
-                        <input name="confsenha_usuario" id="confsenha_usuario" type="password" placeholder="Confirme sua senha" required>
+                        <input name="confsenha_usuario" id="confsenha_usuario" type="password" placeholder="Confirme sua senha" minlength="3" maxlength="10" required>
                     </div>
                     <div class="field">
                         <input type="submit" value="Cadastrar">
