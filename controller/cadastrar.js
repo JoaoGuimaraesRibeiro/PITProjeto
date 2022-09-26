@@ -1,4 +1,5 @@
 var { update_data } = require('../model/update-data.js')
+var { data } = require('../model/req.js')
 
 module.exports = { add_usuario }
 function add_usuario(body) {

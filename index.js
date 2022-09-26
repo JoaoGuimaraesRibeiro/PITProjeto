@@ -9,20 +9,20 @@ const upload = multer()
 const path = require('path')
 const fs = require("fs");
 const session = require('express-session')
-const http = require('http')    
+const http = require('http')
 
 
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
 app.use(express.json())
 app.use(express.urlencoded());
-app.use(session({secret:"abc"}));
+app.use(session({ secret: "abc" }));
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
 
 var { add_usuario } = require('./controller/cadastrar')
-//const { ler_json } = require('./model/req')
+const { data, ler_json } = require('./model/req.js')
 //const { update_data } = require('./model/update-data')
 
 app.listen(port, () => {
@@ -33,10 +33,21 @@ app.get('/', (req, res) => {
     res.render('./index.html')
 })
 
+//cadastrar
 app.post('/cadastrar', (req, res) => {
-    add_usuario()
+    let body = req.body
+    add_usuario(body)
     res.render('./index.html')
 })
+
+//logar
+app.use('/acesso/*', (req, res, next) => {
+    if (req.session.email) {
+        next();
+    } else {
+        res.redirect('./index.html')
+    }
+});
 
 app.post('/logar', (req, res) => {
     const usuarioscad = fs.readFileSync('./model/usuario.json')
@@ -53,9 +64,8 @@ app.post('/logar', (req, res) => {
             return
         }
 
-
     }
-    //res.send('Error 404')
+    res.send('Error 404')
 
 })
 

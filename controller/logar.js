@@ -1,6 +1,6 @@
 function logar(){
     var emails = document.getElementById('emails').value
-    var senha = document.getElementById('senhas').value
+    var senha = document.getElementById('senha').value
 
 console.log(JSON.stringify({
     emails:emails,
@@ -12,7 +12,8 @@ console.log(JSON.stringify({
         body: JSON.stringify({
             emails:emails,
             senha:senha
-        })
+        }),
+        
         
     })
 
@@ -20,7 +21,7 @@ console.log(JSON.stringify({
         var status = await resp.text();
         console.log(status)
         if(status == 'conectado' ){
-            alert("Conectado")
+            alert("CONECTADO")
         }else {
             alert("Nome e Senha inválidos")
         }
