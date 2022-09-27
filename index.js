@@ -11,6 +11,9 @@ const fs = require("fs");
 const session = require('express-session')
 const http = require('http')
 
+require('./model/db')
+require('./model/user')
+
 
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
@@ -21,14 +24,15 @@ app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
 
-var { add_usuario } = require('./controller/cadastrar')
-const { data, ler_json } = require('./model/req.js')
-//const { update_data } = require('./model/update-data')
+const {add_usuario} = require('./controller/cadastrar')
 
+
+//iniciar servidor
 app.listen(port, () => {
     console.log(`Tudo acontece em http://localhost:${port}`)
 })
 
+//renderizar página
 app.get('/', (req, res) => {
     res.render('./index.html')
 })
@@ -37,37 +41,10 @@ app.get('/', (req, res) => {
 app.post('/cadastrar', (req, res) => {
     let body = req.body
     add_usuario(body)
-    res.render('./index.html')
+    res.redirect(req.get('referer'));
 })
 
 //logar
-app.use('/acesso/*', (req, res, next) => {
-    if (req.session.email) {
-        next();
-    } else {
-        res.redirect('./index.html')
-    }
-});
-
-app.post('/logar', (req, res) => {
-    const usuarioscad = fs.readFileSync('./model/usuario.json')
-    const usuariosparse = JSON.parse(usuarioscad)
-
-    var email = req.body.emails
-    var senha = req.body.senha
-
-
-    for (var Usuario of usuariosparse) {
-        if (email == Usuario.email && senha == Usuario.senha) {
-            req.session.email = Usuario
-            res.send('conectado')
-            return
-        }
-
-    }
-    res.send('Error 404')
-
-})
 
 
 

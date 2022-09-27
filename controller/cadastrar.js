@@ -1,23 +1,16 @@
-var { update_data } = require('../model/update-data.js')
-var { data } = require('../model/req.js')
+const User = require('../model/user');
 
-module.exports = { add_usuario }
-function add_usuario(body) {
-    try {
-        var { email_usuario, senha_usuario, confsenha_usuario } = body
+module.exports = {add_usuario}
+function add_usuario(body){
+    var  tipo = window.document.getElementById('select').value;
+    var email = window.document.getElementById('email_usuario').value;
+    var senha = window.document.getElementById('senha_usuario').value;
 
-        const novo_usuario = {
-            "email": email_usuario,
-            "senha": senha_usuario,
-            "confsenha": confsenha_usuario
+    User.query("INSERT INTO User(tipo, email, senha) VALUES ("+tipo+", "+email+", "+senha+")", function(err, result){
+        if(!err){
+            window.alert('Usuário cadastrado com sucesso!');
+        }else{
+            window('Erro ao cadastrar usuario!');
         }
-
-        data.push(novo_usuario)
-
-        return update_data(data)
-
-    }
-    catch (e) {
-        return 'erro no add_usuario'
-    }
+    }); 
 }
