@@ -11,9 +11,8 @@ const fs = require("fs");
 const session = require('express-session')
 const http = require('http')
 
-require('./model/db')
-require('./model/user')
-
+const User = require('./model/user')
+const db = require('./model/db')
 
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
@@ -22,9 +21,6 @@ app.use(express.urlencoded());
 app.use(session({ secret: "abc" }));
 app.use(bodyParser.json())
 app.use(express.static(path.join(__dirname, 'public')))
-
-
-const {add_usuario} = require('./controller/cadastrar')
 
 
 //iniciar servidor
@@ -39,12 +35,34 @@ app.get('/', (req, res) => {
 
 //cadastrar
 app.post('/cadastrar', (req, res) => {
-    let body = req.body
-    add_usuario(body)
-    res.redirect(req.get('referer'));
+    if (req.body.senha_usuario != req.body.confsenha_usuario) {
+        res.send('As senhas estão diferentes!')
+    } else if (req.body.senha_usuario == req.body.confsenha_usuario) {
+        User.create({
+            email: req.body.email_usuario,
+            senha: req.body.senha_usuario,
+            tipo: req.body.select
+        }).then(function () {
+            res.redirect(req.get('referer'));
+        }).catch(function (err) {
+            res.send('Erro ao cadastrar: ' + err)
+        })
+    }
 })
 
 //logar
+app.post('/logar', (req, res) => {
+    var email = req.body.email;
+    var senha = req.body.senha;
+
+    db.query("Select * from User where email = ? and senha = ?", [email, senha], function (error, results, fields) {
+        if (results.length > 0) {
+            res.send('Logado com Sucesso');
+        } else {
+            res.send('Email e Senha incorretos! Tente Novamente');
+        }
+    })
+})
 
 
 
