@@ -51,18 +51,24 @@ app.post('/cadastrar', (req, res) => {
 })
 
 //logar
-app.post('/logar', (req, res) => {
+app.post('/logar', async (req, res) => {
     var email = req.body.email;
     var senha = req.body.senha;
 
-    db.query("Select * from User where email = ? and senha = ?", [email, senha], function (error, results, fields) {
-        if (results.length > 0) {
-            res.send('Logado com Sucesso');
-        } else {
-            res.send('Email e Senha incorretos! Tente Novamente');
+    const user = await User.findOne({
+        where:{
+            email,
+            senha
         }
     })
-})
+
+    if(!user){
+        res.send('Email e Senha Inválidos')
+
+    }else{
+        res.send('Logado com sucesso')
+    }
+    });
 
 
 

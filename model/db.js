@@ -6,7 +6,7 @@ const sequelize = new Sequelize("CTalentos", "root", "", {
 });
 
 sequelize.authenticate().then(function () {
-    console.log("conectado")
+    console.log("Conectado ao banco de dados")
 ;
 }).catch(function () {
     console.log("erro");

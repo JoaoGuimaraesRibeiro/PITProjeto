@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="./controller/logar.js"></script>
     <title>Caça Talentos Entrada</title>
 </head>
 
@@ -32,7 +31,7 @@
                 <div class="slide-tab"></div>
             </div>
             <div class="form-inner">
-                <form action="/logar" method="post" id="logar" class="login">
+                <form action="/logar" method="post" class="login">
                     <div class="field">
                         <input type="email" name="emails" id="email" placeholder="Insira seu email" required>
                     </div>
@@ -41,7 +40,7 @@
                     </div>
                     <div class="pass-link"><a href="#">Esqueceu a senha?</a></div>
                     <div class="field">
-                        <input onclick="logar()" type="submit" value="Entrar">
+                        <input type="submit" value="Entrar">
                     </div>
                     <div class="signup-link">Não é cadastrado? <a href="#">Faça Cadastro agora</a></div>
                 </form>
